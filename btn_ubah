@@ -1,0 +1,21 @@
+    Private Sub btnubah_Click(sender As Object, e As EventArgs) Handles btnubah.Click
+        Dim idjabtan As String
+        Dim jengkel As String
+        If (rlaki.Checked) Then
+            jengkel = rlaki.Text
+        Else
+            jengkel = rperempuan.Text
+        End If
+        tbjabatan = proses.ExecuteQuery("Select * from Tb_Jabatan where Jabatan = '" & cmbjabatan.Text & "'")
+        If tbjabatan.Rows.Count <> 0 Then
+            idjabtan = tbjabatan.Rows(0).Item("ID_Jabatan").ToString
+        End If
+        SQL = "Update Tb_Karyawan set Nama_Karyawan = '" & txtnama.Text & "',  ID_Jabatan = '" & idjabtan & "',No_Tlp = '" & txttlp.Text & "',Alamat = '" & txtalamat.Text & "' where NIP = '" & txtnip.Text & "'"
+        If MsgBox("Yakin ingim Mengubah data...?", vbYesNo, "Confirmation") = vbYes Then
+            proses.ExecuteNonQuery(SQL)
+            MessageBox.Show("Data sudah diperbaiki....!!", "Perubahan Sukses", MessageBoxButtons.OK,
+                            MessageBoxIcon.Information)
+            Call bersih()
+            fillgrid()
+        End If
+    End Sub
